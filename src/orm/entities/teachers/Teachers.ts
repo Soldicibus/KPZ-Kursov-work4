@@ -1,61 +1,31 @@
-import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Check, OneToMany } from "typeorm";
+import { Timetable } from "../Timetable/Timetable";
 
-import { Role, Language } from './types';
-
-@Entity('users')
-export class User {
+@Entity("Teacher")
+@Check(`"teacher_email" ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'`)
+@Check(`"teacher_phone" ~ '^0[3-9]\\d{1}-\\d{3}-\\d{4}$'`)
+export class Teacher {
   @PrimaryGeneratedColumn()
-  id: number;
+  teacher_id: number;
 
-  @Column({
-    unique: true,
-  })
-  email: string;
+  @Column({ length: 50, unique: true })
+  teacher_email: string;
 
-  @Column()
-  password: string;
+  @Column({ length: 15, unique: true })
+  teacher_phone: string;
 
-  @Column({
-    nullable: true,
-    unique: true,
-  })
-  username: string;
+  @Column({ length: 50 })
+  teacher_surname: string;
 
-  @Column({
-    nullable: true,
-  })
-  name: string;
+  @Column({ length: 50 })
+  teacher_name: string;
 
-  @Column({
-    default: 'STANDARD' as Role,
-    length: 30,
-  })
-  role: string;
+  @Column({ length: 50, nullable: true })
+  teacher_patronymic: string;
 
-  @Column({
-    default: 'en-US' as Language,
-    length: 15,
-  })
-  language: string;
+  @Column({ length: 50 })
+  teacher_position: string;
 
-  @Column()
-  @CreateDateColumn()
-  created_at: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  setLanguage(language: Language) {
-    this.language = language;
-  }
-
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
-
-  checkIfPasswordMatch(unencryptedPassword: string) {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
-  }
+  @OneToMany(() => Timetable, (timetable) => timetable.time_Teacher_id)
+  timetables: Timetable[];
 }

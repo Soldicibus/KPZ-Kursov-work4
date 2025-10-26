@@ -1,61 +1,32 @@
-import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, Check } from "typeorm";
+import { StudentParent } from "../StudentParent/StudentParent";
+import { Students } from "../Students/Students";
 
-import { Role, Language } from './types';
-
-@Entity('users')
-export class User {
+@Entity("Parents")
+@Check(`"parent_email" ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'`)
+@Check(`"parent_phone" ~ '^0[3-9]\\d{1}-\\d{3}-\\d{4}$'`)
+export class Parents {
   @PrimaryGeneratedColumn()
-  id: number;
+  parent_id: number;
 
-  @Column({
-    unique: true,
-  })
-  email: string;
+  @Column({ length: 50, unique: true, nullable: true })
+  parent_email: string;
 
-  @Column()
-  password: string;
+  @Column({ length: 15, unique: true })
+  parent_phone: string;
 
-  @Column({
-    nullable: true,
-    unique: true,
-  })
-  username: string;
+  @Column({ length: 50 })
+  parent_name: string;
 
-  @Column({
-    nullable: true,
-  })
-  name: string;
+  @Column({ length: 50 })
+  parent_surname: string;
 
-  @Column({
-    default: 'STANDARD' as Role,
-    length: 30,
-  })
-  role: string;
+  @Column({ length: 50, nullable: true })
+  parent_patronymic: string;
 
-  @Column({
-    default: 'en-US' as Language,
-    length: 15,
-  })
-  language: string;
+  @OneToMany(() => StudentParent, (sp) => sp.parent)
+  studentParents: StudentParent[];
 
-  @Column()
-  @CreateDateColumn()
-  created_at: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  setLanguage(language: Language) {
-    this.language = language;
-  }
-
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
-
-  checkIfPasswordMatch(unencryptedPassword: string) {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
-  }
+  @ManyToMany(() => Students, (student) => student.parents)
+  students: Students[];
 }

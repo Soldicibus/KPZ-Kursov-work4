@@ -1,61 +1,32 @@
-import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check } from "typeorm";
+import { Timetable } from "../Timetable/Timetable";
+import { Students } from "../Students/Students";
 
-import { Role, Language } from './types';
+export enum JournalStatus {
+  PRESENT = "Присутній",
+  P = "П",
+  ABSENT = "Не присутній",
+  N = "Н",
+}
 
-@Entity('users')
-export class User {
+@Entity("Journal")
+@Check(`"journal_mark" >= 1 AND "journal_mark" <= 12`)
+export class Journal {
   @PrimaryGeneratedColumn()
-  id: number;
+  journal_id: number;
 
-  @Column({
-    unique: true,
-  })
-  email: string;
+  @ManyToOne(() => Students, (Students) => Students.journals, { onDelete: "CASCADE" })
+  journal_Students_id: Students;
 
-  @Column()
-  password: string;
+  @ManyToOne(() => Timetable, { onDelete: "CASCADE" })
+  journal_time_id: Timetable;
 
-  @Column({
-    nullable: true,
-    unique: true,
-  })
-  username: string;
+  @Column({ type: "smallint", nullable: true })
+  journal_mark: number;
 
-  @Column({
-    nullable: true,
-  })
-  name: string;
+  @Column({ type: "text", nullable: true })
+  journal_note: string;
 
-  @Column({
-    default: 'STANDARD' as Role,
-    length: 30,
-  })
-  role: string;
-
-  @Column({
-    default: 'en-US' as Language,
-    length: 15,
-  })
-  language: string;
-
-  @Column()
-  @CreateDateColumn()
-  created_at: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  setLanguage(language: Language) {
-    this.language = language;
-  }
-
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
-
-  checkIfPasswordMatch(unencryptedPassword: string) {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
-  }
+  @Column({ type: "enum", enum: JournalStatus })
+  journal_status: JournalStatus;
 }

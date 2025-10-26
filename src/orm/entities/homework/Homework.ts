@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check } from "typeorm";
-import { Subject } from "./Subject";
-import { Class } from "./Class";
+import { Subject } from "../Subject/Subject";
+import { Class } from "../Class/Class";
 
 @Entity("Homework")
 @Check(`"homework_Class" ~ '^(?:[1-9]|1[01])-([А-ЩЬЮЯҐЄІЇ]|[а-щьюяґєії])$'`)

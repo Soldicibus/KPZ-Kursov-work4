@@ -1,61 +1,27 @@
-import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check } from "typeorm";
+import { Class } from "../Class/Class";
+import { Subject } from "../Subject/Subject";
+import { Teacher } from "../Teacher/Teacher";
 
-import { Role, Language } from './types';
-
-@Entity('users')
-export class User {
+@Entity("Timetable")
+@Check(`"time_Class" ~ '^(?:[1-9]|1[01])-([А-ЩЬЮЯҐЄІЇ]|[а-щьюяґєії])$'`)
+@Check(`"time_day_of_week" IN ('Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П''ятниця')`)
+export class Timetable {
   @PrimaryGeneratedColumn()
-  id: number;
+  time_id: number;
 
-  @Column({
-    unique: true,
-  })
-  email: string;
+  @ManyToOne(() => Class, (cls) => cls.timetables, { onDelete: "CASCADE" })
+  time_Class: Class;
 
-  @Column()
-  password: string;
+  @Column({ length: 10 })
+  time_day_of_week: string;
 
-  @Column({
-    nullable: true,
-    unique: true,
-  })
-  username: string;
+  @Column({ type: "time" })
+  time_time: string;
 
-  @Column({
-    nullable: true,
-  })
-  name: string;
+  @ManyToOne(() => Subject, (subject) => subject.timetables, { onDelete: "CASCADE" })
+  time_Subject_name: Subject;
 
-  @Column({
-    default: 'STANDARD' as Role,
-    length: 30,
-  })
-  role: string;
-
-  @Column({
-    default: 'en-US' as Language,
-    length: 15,
-  })
-  language: string;
-
-  @Column()
-  @CreateDateColumn()
-  created_at: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  setLanguage(language: Language) {
-    this.language = language;
-  }
-
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
-
-  checkIfPasswordMatch(unencryptedPassword: string) {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
-  }
+  @ManyToOne(() => Teacher, (teacher) => teacher.timetables, { onDelete: "CASCADE" })
+  time_Teacher_id: Teacher;
 }

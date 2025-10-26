@@ -1,61 +1,46 @@
-import bcrypt from 'bcryptjs';
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToOne, ManyToMany, OneToMany, Check } from "typeorm";
+import { Class } from "../Class/Class";
+import { Journal } from "../Journal/Journal";
+import { StudentParent } from "../StudentParent/StudentParent";
+import { Parent } from "../Parent/Parent"
 
-import { Role, Language } from './types';
-
-@Entity('users')
-export class User {
+@Entity("Students")
+@Check(`"student_phone" ~ '^0[3-9]\\d{1}-\\d{3}-\\d{4}$'`)
+@Check(`"student_email" ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'`)
+export class Students {
   @PrimaryGeneratedColumn()
-  id: number;
+  student_id: number;
 
-  @Column({
-    unique: true,
+  @Column({ length: 15, unique: true, nullable: true })
+  student_phone: string;
+
+  @Column({ length: 50, unique: true, nullable: true })
+  student_email: string;
+
+  @Column({ length: 50 })
+  student_surname: string;
+
+  @Column({ length: 50 })
+  student_name: string;
+
+  @Column({ length: 50, nullable: true })
+  student_patronymic: string;
+
+  @ManyToOne(() => Class, (cls) => cls.students, { onDelete: "CASCADE" })
+  student_Class: Class;
+
+  @OneToMany(() => Journal, (journal) => journal.journal_Student_id)
+  journals: Journal[];
+
+  @OneToMany(() => StudentParent, (sp) => sp.student)
+  studentParents: StudentParent[];
+
+  @ManyToMany(() => Parent, (parent) => parent.students)
+  @JoinTable({
+    name: "StudentParent",
+    joinColumn: { name: "student_id_ref", referencedColumnName: "student_id" },
+    inverseJoinColumn: { name: "parent_id_ref", referencedColumnName: "parent_id" },
   })
-  email: string;
+  parents: Parent[];
 
-  @Column()
-  password: string;
-
-  @Column({
-    nullable: true,
-    unique: true,
-  })
-  username: string;
-
-  @Column({
-    nullable: true,
-  })
-  name: string;
-
-  @Column({
-    default: 'STANDARD' as Role,
-    length: 30,
-  })
-  role: string;
-
-  @Column({
-    default: 'en-US' as Language,
-    length: 15,
-  })
-  language: string;
-
-  @Column()
-  @CreateDateColumn()
-  created_at: Date;
-
-  @Column()
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  setLanguage(language: Language) {
-    this.language = language;
-  }
-
-  hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8);
-  }
-
-  checkIfPasswordMatch(unencryptedPassword: string) {
-    return bcrypt.compareSync(unencryptedPassword, this.password);
-  }
 }
