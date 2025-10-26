@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check } from "typeorm";
 import { Class } from "../Class/Class";
 import { Subject } from "../Subject/Subject";
-import { Teacher } from "../Teacher/Teacher";
+import { Teacher } from "../Teachers/Teachers";
 
 @Entity("Timetable")
 @Check(`"time_Class" ~ '^(?:[1-9]|1[01])-([А-ЩЬЮЯҐЄІЇ]|[а-щьюяґєії])$'`)

@@ -10,7 +10,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 
 import './utils/response/customSuccess';
-import { errorHandler } from './middleware/errorHandler';
+//import { errorHandler } from './middleware/errorHandler';
 import { getLanguage } from './middleware/getLanguage';
 import { dbCreateConnection } from './orm/dbCreateConnection';
 import routes from './routes';
@@ -34,7 +34,7 @@ app.use(morgan('combined'));
 
 app.use('/', routes);
 
-app.use(errorHandler);
+//pp.use(errorHandler);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

@@ -12,8 +12,8 @@ export class Class {
   @Column({ type: "int", unique: true })
   class_Teacher: number;
 
-  @OneToMany(() => Students, (Students) => Students.Students_Class)
-  Studentss: Students[];
+  @OneToMany(() => Students, (Students) => Students.student_Class)
+  Students: Students[];
 
   @OneToMany(() => Homework, (homework) => homework.homework_Class)
   homeworks: Homework[];

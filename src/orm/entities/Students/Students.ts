@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToOne, ManyToMan
 import { Class } from "../Class/Class";
 import { Journal } from "../Journal/Journal";
 import { StudentParent } from "../StudentParent/StudentParent";
-import { Parent } from "../Parent/Parent"
+import { Parents } from "../Parents/Parents"
 
 @Entity("Students")
 @Check(`"student_phone" ~ '^0[3-9]\\d{1}-\\d{3}-\\d{4}$'`)
@@ -26,21 +26,21 @@ export class Students {
   @Column({ length: 50, nullable: true })
   student_patronymic: string;
 
-  @ManyToOne(() => Class, (cls) => cls.students, { onDelete: "CASCADE" })
+  @ManyToOne(() => Class, (cls) => cls.Students, { onDelete: "CASCADE" })
   student_Class: Class;
 
-  @OneToMany(() => Journal, (journal) => journal.journal_Student_id)
+  @OneToMany(() => Journal, (journal) => journal.journal_Students_id)
   journals: Journal[];
 
   @OneToMany(() => StudentParent, (sp) => sp.student)
   studentParents: StudentParent[];
 
-  @ManyToMany(() => Parent, (parent) => parent.students)
+  @ManyToMany(() => Parents, (parent) => parent.students)
   @JoinTable({
     name: "StudentParent",
     joinColumn: { name: "student_id_ref", referencedColumnName: "student_id" },
     inverseJoinColumn: { name: "parent_id_ref", referencedColumnName: "parent_id" },
   })
-  parents: Parent[];
+  parents: Parents[];
 
 }
