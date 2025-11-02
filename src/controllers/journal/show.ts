@@ -4,18 +4,11 @@ import { Journal } from "../../orm/entities/Journal/Journal";
 
 export default async (req: Request, res: Response) => {
   const repo = getRepository(Journal);
+  //const  = await repo.findOne({ relations: ["journal_Students_id", "journal_time_id"] });
   const journal = await repo.findOne({
     where: { journal_id: Number(req.params.id) },
-    relations: [
-      "journal_Student",
-      "journal_Student.student_Class",
-      "journal_time",
-      "journal_time.time_Class",
-      "journal_time.time_Subject_name",
-      "journal_time.time_Teacher",
-    ],
+    relations: ["journal_Students_id", "journal_time_id"],
   });
-
   if (!journal) return res.status(404).json({ message: "Journal entry not found" });
   res.json(journal);
   return res.status(200);

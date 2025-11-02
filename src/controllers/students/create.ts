@@ -2,36 +2,61 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Students } from "../../orm/entities/Students/Students";
 import { Class } from "../../orm/entities/Class/Class";
-import { Parents } from "../../orm/entities/Parents/Parents";
 
 export default async (req: Request, res: Response) => {
   try {
+    const {
+      student_phone,
+      student_email,
+      student_surname,
+      student_name,
+      student_patronymic,
+      student_Class, // expects a class name like "10-A"
+    } = req.body;
+
     const studentRepo = getRepository(Students);
     const classRepo = getRepository(Class);
-    const parentRepo = getRepository(Parents);
 
-    const { student_Class, parents: parentIds, ...studentData } = req.body;
-
-    // Find the class
-    const foundClass = await classRepo.findOne({ where: { class_name: student_Class } });
-    if (!foundClass) return res.status(400).json({ error: "Class not found" });
-
-    // Find parents if provided
-    let parentEntities = [];
-    if (parentIds && Array.isArray(parentIds)) {
-      parentEntities = await parentRepo.findByIds(parentIds);
+    // --- 1️⃣ Validate required fields ---
+    if (!student_surname || !student_name || !student_Class) {
+      return res.status(400).json({
+        error: "Missing required fields: student_surname, student_name, or student_Class",
+      });
     }
 
-    const newStudent = studentRepo.create({
-      ...studentData,
-      student_Class: foundClass,
-      parents: parentEntities,
+    // --- 2️⃣ Check if class exists ---
+    const classEntity = await classRepo.findOne({
+      where: { class_name: student_Class },
     });
 
-    await studentRepo.save(newStudent);
-    res.status(201).json(newStudent);
-    return res.status(200);
+    if (!classEntity) {
+      return res.status(404).json({
+        error: `Class '${student_Class}' not found. Please create it first.`,
+      });
+    }
+
+    // --- 3️⃣ Create and save student ---
+    const student = studentRepo.create({
+      student_phone,
+      student_email,
+      student_surname,
+      student_name,
+      student_patronymic,
+      student_Class: classEntity,
+    });
+
+    await studentRepo.save(student);
+
+    // --- 4️⃣ Return success ---
+    return res.status(201).json({
+      message: "Student created successfully",
+      student,
+    });
   } catch (err: any) {
-    return res.status(400).json({ error: err.message });
+    console.error("Error creating student:", err);
+    return res.status(500).json({
+      error: "Server error",
+      details: err.message,
+    });
   }
 };

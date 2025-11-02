@@ -4,6 +4,6 @@ import { Subject } from "../../orm/entities/Subject/Subject";
 
 export default async (_req: Request, res: Response) => {
   const repo = getRepository(Subject);
-  const subjects = await repo.find({ relations: ["homework", "timetable"] });
+  const subjects = await repo.find({ relations: ["homeworks", "timetables"] });
   res.json(subjects);
 };

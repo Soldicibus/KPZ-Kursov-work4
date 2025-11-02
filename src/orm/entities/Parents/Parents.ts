@@ -4,7 +4,7 @@ import { Students } from "../Students/Students";
 
 @Entity("Parents")
 @Check(`"parent_email" ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'`)
-@Check(`"parent_phone" ~ '^0[3-9]\\d{1}-\\d{3}-\\d{4}$'`)
+@Check(`"parent_phone" ~ '^0[3-9][0-9]-[0-9]{3}-[0-9]{4}$'`)
 export class Parents {
   @PrimaryGeneratedColumn()
   parent_id: number;

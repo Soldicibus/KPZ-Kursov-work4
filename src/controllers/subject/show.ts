@@ -6,7 +6,7 @@ export default async (req: Request, res: Response) => {
   const repo = getRepository(Subject);
   const subject = await repo.findOne({
     where: { subject_name: req.params.name },
-    relations: ["homework", "timetable"],
+    relations: ["homeworks", "timetables"],
   });
   if (!subject) return res.status(404).json({ message: "Subject not found" });
   res.json(subject);
