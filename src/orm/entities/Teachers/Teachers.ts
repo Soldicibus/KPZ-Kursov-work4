@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, Check, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Check, OneToMany, ManyToOne } from "typeorm";
 import { Timetable } from "../Timetable/Timetable";
+import { Class } from "../Class/Class";
 
 @Entity("Teacher")
 @Check(`"teacher_email" ~ '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'`)
@@ -28,4 +29,7 @@ export class Teacher {
 
   @OneToMany(() => Timetable, (timetable) => timetable.time_Teacher_id)
   timetables: Timetable[];
+
+  @ManyToOne(() => Class, (cls) => cls.class_Teacher, { onDelete: "CASCADE" })
+  teacher_class: Class;
 }

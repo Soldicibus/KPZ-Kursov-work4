@@ -17,14 +17,12 @@ export default async (req: Request, res: Response) => {
     const studentRepo = getRepository(Students);
     const classRepo = getRepository(Class);
 
-    // --- 1️⃣ Validate required fields ---
     if (!student_surname || !student_name || !student_Class) {
       return res.status(400).json({
         error: "Missing required fields: student_surname, student_name, or student_Class",
       });
     }
 
-    // --- 2️⃣ Check if class exists ---
     const classEntity = await classRepo.findOne({
       where: { class_name: student_Class },
     });
@@ -35,7 +33,6 @@ export default async (req: Request, res: Response) => {
       });
     }
 
-    // --- 3️⃣ Create and save student ---
     const student = studentRepo.create({
       student_phone,
       student_email,
@@ -47,7 +44,6 @@ export default async (req: Request, res: Response) => {
 
     await studentRepo.save(student);
 
-    // --- 4️⃣ Return success ---
     return res.status(201).json({
       message: "Student created successfully",
       student,
