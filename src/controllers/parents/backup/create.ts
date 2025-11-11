@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Parents } from "../../orm/entities/Parents/Parents";
-import { Students } from "../../orm/entities/Students/Students";
+import { Parents } from "../../../orm/entities/Parents/Parents";
+import { Students } from "../../../orm/entities/Students/Students";
 
 export default async (req: Request, res: Response) => {
   try {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Students } from "../../orm/entities/Students/Students";
+import { Students } from "../../../orm/entities/Students/Students";
 
 export default async (req: Request, res: Response) => {
   const repo = getRepository(Students);
