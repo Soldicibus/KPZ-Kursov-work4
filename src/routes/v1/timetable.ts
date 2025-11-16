@@ -1,9 +1,9 @@
 import { Router } from "express";
-import create from "../../controllers/timetable/create";
+import create from "../../controllers/timetable/backup/create";
 import list from "../../controllers/timetable/list";
-import show from "../../controllers/timetable/show";
-import update from "../../controllers/timetable/update";
-import destroy from "../../controllers/timetable/destroy";
+import show from "../../controllers/timetable/backup/show";
+import update from "../../controllers/timetable/backup/update";
+import destroy from "../../controllers/timetable/backup/destroy";
 
 const router = Router();
 

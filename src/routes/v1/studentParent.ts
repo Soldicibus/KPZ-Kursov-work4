@@ -1,6 +1,6 @@
 import { Router } from "express";
-import add from "../../controllers/studentParent/add";
-import remove from "../../controllers/studentParent/remove";
+import add from "../../controllers/studentParent/backup/add";
+import remove from "../../controllers/studentParent/backup/remove";
 
 const router = Router();
 

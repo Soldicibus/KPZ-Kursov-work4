@@ -1,9 +1,9 @@
 import { Router } from "express";
-import create from "../../controllers/teachers/create";
-import list from "../../controllers/teachers/list";
-import show from "../../controllers/teachers/show";
+import create from "../../controllers/teachers/backup/create";
+import list from "../../controllers/teachers/backup/list";
+import show from "../../controllers/teachers/backup/show";
 import update from "../../controllers/teachers/update";
-import destroy from "../../controllers/teachers/destroy";
+import destroy from "../../controllers/teachers/backup/destroy";
 
 const router = Router();
 
