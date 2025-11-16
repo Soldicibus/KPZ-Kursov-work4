@@ -20,7 +20,6 @@ export default async (req: Request, res: Response) => {
   const parent = await parentRepo.findOne({ where: { parent_id: parentId } });
   if (!parent) return res.status(404).json({ error: "Parent not found" });
 
-  // Add parent if not already assigned
   if (!student.parents.some((p) => p.parent_id === parent.parent_id)) {
     student.parents.push(parent);
     await studentRepo.save(student);

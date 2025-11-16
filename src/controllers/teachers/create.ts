@@ -12,20 +12,18 @@ export default async (req: Request, res: Response) => {
       teacher_name,
       teacher_patronymic,
       teacher_position,
-      teacher_class, // expects class name like "10-А"
+      teacher_class,
     } = req.body;
 
     const teacherRepo = getRepository(Teacher);
     const classRepo = getRepository(Class);
 
-    // --- Validation ---
     if (!teacher_email || !teacher_phone || !teacher_name || !teacher_surname) {
       return res.status(400).json({
         error: "Missing required fields: teacher_email, teacher_phone, teacher_name, or teacher_surname",
       });
     }
 
-    // --- Find the class ---
     let classEntity = null;
     if (teacher_class) {
       classEntity = await classRepo.findOne({
@@ -39,7 +37,6 @@ export default async (req: Request, res: Response) => {
       }
     }
 
-    // --- Create the teacher ---
     const teacher = teacherRepo.create({
       teacher_email,
       teacher_phone,
@@ -47,7 +44,7 @@ export default async (req: Request, res: Response) => {
       teacher_name,
       teacher_patronymic,
       teacher_position,
-      teacher_class: classEntity, // relation to Class entity
+      teacher_class: classEntity,
     });
 
     await teacherRepo.save(teacher);

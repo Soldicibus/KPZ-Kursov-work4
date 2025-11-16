@@ -10,7 +10,6 @@ export default async (req: Request, res: Response) => {
 
     const { students: studentIds, ...parentData } = req.body;
 
-    // Find students if provided
     let studentEntities = [];
     if (studentIds && Array.isArray(studentIds)) {
       studentEntities = await studentRepo.findByIds(studentIds);
