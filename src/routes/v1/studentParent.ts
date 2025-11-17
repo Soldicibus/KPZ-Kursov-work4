@@ -1,10 +1,9 @@
 import { Router } from "express";
-import add from "../../controllers/studentParent/backup/add";
-import remove from "../../controllers/studentParent/backup/remove";
+import { createStudentParent, deleteStudentParent } from "../../controllers/studentParent/studentParent";
 
 const router = Router();
 
-router.post("/add", add);       // Assign a parent to a student
-router.post("/remove", remove); // Remove a parent from a student P.S. HAHA YOU ORPHAN!
+router.post("/add", createStudentParent);       // Assign a parent to a student
+router.post("/remove", deleteStudentParent); // Remove a parent from a student
 
 export default router;

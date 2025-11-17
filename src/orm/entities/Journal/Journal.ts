@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Check } from "typeorm";
 import { Timetable } from "../Timetable/Timetable";
 import { Students } from "../Students/Students";
 
@@ -16,9 +16,11 @@ export class Journal {
   journal_id: number;
 
   @ManyToOne(() => Students, (Students) => Students.journals, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "journal_students_id" }) // explicitly match DB column
   journal_Students_id: Students;
 
   @ManyToOne(() => Timetable, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "journal_time_id" }) // same here
   journal_time_id: Timetable;
 
   @Column({ type: "smallint", nullable: true })

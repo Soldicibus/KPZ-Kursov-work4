@@ -13,7 +13,7 @@ export const validatorEdit = async (req: Request, res: Response, next: NextFunct
   username = !username ? '' : username;
   name = !name ? '' : name;
 
-  const user = await userRepository.findOne({ username });
+  const user = await userRepository.findOne({ where: { username } });
   if (user) {
     errorsValidation.push({ username: `Username '${username}' already exists` });
   }

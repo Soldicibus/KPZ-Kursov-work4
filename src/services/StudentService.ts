@@ -38,14 +38,14 @@ export class StudentService {
 
   async getAllStudents() {
     return await this.studentRepo.find({
-      relations: ["student_Class", "parents", "journals"],
+      relations: ["student_Class"],
     });
   }
 
   async getStudentById(studentId: number) {
     const student = await this.studentRepo.findOne({
       where: { student_id: studentId },
-      relations: ["student_Class", "parents", "journals"],
+      relations: ["student_Class"],
     });
     if (!student) throw new Error(`Student with ID ${studentId} not found`);
     return student;

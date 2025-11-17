@@ -1,16 +1,12 @@
 import { Router } from "express";
-import create from "../../controllers/timetable/backup/create";
-import list from "../../controllers/timetable/list";
-import show from "../../controllers/timetable/backup/show";
-import update from "../../controllers/timetable/backup/update";
-import destroy from "../../controllers/timetable/backup/destroy";
+import { createTimetable, getAllTimetables, getTimetableById, updateTimetable, deleteTimetable } from "controllers/timetable/timetable";
 
 const router = Router();
 
-router.post("/", create);
-router.get("/", list);
-router.get("/:id", show);
-router.put("/:id", update);
-router.delete("/:id", destroy);
+router.post("/", createTimetable);
+router.get("/", getAllTimetables);
+router.get("/:id", getTimetableById);
+router.put("/:id", updateTimetable);
+router.delete("/:id", deleteTimetable);
 
 export default router;

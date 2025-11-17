@@ -73,7 +73,7 @@ describe('Users', () => {
 
   describe('GET /v1/auth/users//:id([0-9]+)', () => {
     it('should get user', async () => {
-      const user = await userRepository.findOne({ email: adminUser.email });
+  const user = await userRepository.findOne({ where: { email: adminUser.email } });
       const res = await request(app).get(`/v1/users/${user.id}`).set('Authorization', adminUserToken);
       expect(res.status).to.equal(200);
       expect(res.body.message).to.equal('User found');

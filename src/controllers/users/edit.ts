@@ -5,7 +5,7 @@ import { User } from 'orm/entities/users/User';
 import { CustomError } from 'utils/response/custom-error/CustomError';
 
 export const edit = async (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
   const { username, name } = req.body;
 
   const userRepository = getRepository(User);

@@ -8,7 +8,7 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import { getConnection } from "typeorm";
+import { AppDataSource } from "database/data-source";
 
 import './utils/response/customSuccess';
 //import { errorHandler } from './middleware/errorHandler';
@@ -44,7 +44,7 @@ app.listen(port, () => {
 
 (async () => {
   await dbCreateConnection();
-  getConnection().entityMetadatas.forEach((meta) => {
+  AppDataSource.entityMetadatas.forEach((meta) => {
   console.log("✅ Loaded entity:", meta.name, "->", meta.tableName);
 });
 })();

@@ -1,16 +1,12 @@
 import { Router } from "express";
-import create from "../../controllers/teachers/backup/create";
-import list from "../../controllers/teachers/backup/list";
-import show from "../../controllers/teachers/backup/show";
-import update from "../../controllers/teachers/update";
-import destroy from "../../controllers/teachers/backup/destroy";
+import { createTeacher, getAllTeachers, getTeacherById, updateTeacher, deleteTeacher } from "controllers/teachers/teachers";
 
 const router = Router();
 
-router.post("/", create);
-router.get("/", list);
-router.get("/:id", show);
-router.put("/:id", update);
-router.delete("/:id", destroy);
+router.post("/", createTeacher);
+router.get("/", getAllTeachers);
+router.get("/:id", getTeacherById);
+router.put("/:id", updateTeacher);
+router.delete("/:id", deleteTeacher);
 
 export default router;

@@ -1,16 +1,12 @@
 import { Router } from "express";
-import create from "../../controllers/homework/backup/create";
-import list from "../../controllers/homework/backup/list";
-import show from "../../controllers/homework/backup/show";
-import update from "../../controllers/homework/backup/update";
-import destroy from "../../controllers/homework/backup/destroy";
+import { createHomework, updateHomework, getAllHomeworks, getHomeworkById, deleteHomework } from "controllers/homework/homework";
 
 const router = Router();
 
-router.post("/", create);
-router.get("/", list);
-router.get("/:id", show);
-router.put("/:id", update);
-router.delete("/:id", destroy);
+router.post("/", createHomework);
+router.get("/", getAllHomeworks);
+router.get("/:id", getHomeworkById);
+router.put("/:id", updateHomework);
+router.delete("/:id", deleteHomework);
 
 export default router;
