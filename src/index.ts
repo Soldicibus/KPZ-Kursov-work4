@@ -39,13 +39,15 @@ app.use('/', routes);
 //pp.use(errorHandler);
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  logger.info(`Server running on port ${port}`);
-});
 
+// Initialize DB first so validation middleware that uses repositories can run safely
 (async () => {
   await dbCreateConnection();
   AppDataSource.entityMetadatas.forEach((meta) => {
     logger.debug('Loaded entity', { name: meta.name, tableName: meta.tableName });
+  });
+
+  app.listen(port, () => {
+    logger.info(`Server running on port ${port}`);
   });
 })();

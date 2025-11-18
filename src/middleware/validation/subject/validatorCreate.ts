@@ -7,6 +7,10 @@ import { ErrorValidation } from 'utils/response/custom-error/types';
 
 export const validatorCreate = async (req: Request, res: Response, next: NextFunction) => {
   let { subject_name, subject_desc } = req.body;
+
+  subject_name = (subject_name || "").trim();
+  subject_desc = (subject_desc || "").trim();
+
   const errorsValidation: ErrorValidation[] = [];
   const subjectRepository = AppDataSource.getRepository(Subject);
 
@@ -20,7 +24,6 @@ export const validatorCreate = async (req: Request, res: Response, next: NextFun
   }
 
   if (subject_desc && subject_desc.length > 0) {
-    // check uniqueness of description since entity marks it unique
     const descExists = await subjectRepository.findOne({ where: { subject_desc } });
     if (descExists) {
       errorsValidation.push({ subject_desc: 'Subject description must be unique' });
