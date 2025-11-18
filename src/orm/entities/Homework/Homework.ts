@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, Check, JoinColumn } from "typeorm";
 import { Subject } from "../Subject/Subject";
 import { Class } from "../Class/Class";
 
@@ -9,6 +9,7 @@ export class Homework {
   homework_id: number;
 
   @ManyToOne(() => Subject, subject => subject.homeworks, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "homework_subject_subject_name" }) // explicitly match DB column
   homework_Subject: Subject;
 
   @Column({ type: "date", default: () => "CURRENT_DATE" })
@@ -21,5 +22,6 @@ export class Homework {
   homework_duedate: Date;
 
   @ManyToOne(() => Class, cls => cls.homeworks, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "homework_class_class_name" }) // explicitly match DB column
   homework_Class: Class;
 }

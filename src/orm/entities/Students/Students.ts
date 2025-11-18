@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToOne, ManyToMany, OneToMany, Check } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToOne, ManyToMany, OneToMany, JoinColumn, Check } from "typeorm";
 import { Class } from "../Class/Class";
 import { Journal } from "../Journal/Journal";
 import { StudentParent } from "../StudentParent/StudentParent";
@@ -27,6 +27,7 @@ export class Students {
   student_patronymic: string;
 
   @ManyToOne(() => Class, (cls) => cls.Students, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "student_class_class_name" }) // explicitly match DB column
   student_Class: Class;
 
   @OneToMany(() => Journal, (journal) => journal.journal_Students_id)

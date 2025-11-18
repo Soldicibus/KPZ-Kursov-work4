@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Check, OneToMany, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Check, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 import { Timetable } from "../Timetable/Timetable";
 import { Class } from "../Class/Class";
 
@@ -31,5 +31,6 @@ export class Teacher {
   timetables: Timetable[];
 
   @ManyToOne(() => Class, (cls) => cls.class_Teacher, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "teacher_class_class_name" }) // explicitly match DB column
   teacher_class: Class;
 }

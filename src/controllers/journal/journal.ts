@@ -17,8 +17,8 @@ export const createJournal = async (req: Request, res: Response) => {
 export const getAllJournals = async (_req: Request, res: Response) => {
   try {
     const journals = await journalService.getAllJournals();
-    //const journalDTOs = journals.map(journal => new JournalDTO(journal));
-    res.status(200).json(journals);
+    const journalDTOs = journals.map(journal => new JournalDTO(journal));
+    res.status(200).json(journalDTOs);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

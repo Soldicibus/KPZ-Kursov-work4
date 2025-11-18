@@ -16,11 +16,11 @@ export class Journal {
   journal_id: number;
 
   @ManyToOne(() => Students, (Students) => Students.journals, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "journal_students_id" }) // explicitly match DB column
+  @JoinColumn({ name: "journal_students_id_student_id" }) // explicitly match DB column
   journal_Students_id: Students;
 
   @ManyToOne(() => Timetable, { onDelete: "CASCADE" })
-  @JoinColumn({ name: "journal_time_id" }) // same here
+  @JoinColumn({ name: "journal_time_id_time_id" }) // same here
   journal_time_id: Timetable;
 
   @Column({ type: "smallint", nullable: true })

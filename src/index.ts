@@ -11,6 +11,7 @@ import morgan from 'morgan';
 import { AppDataSource } from "database/data-source";
 
 import './utils/response/customSuccess';
+import { logger } from './utils/logger';
 //import { errorHandler } from './middleware/errorHandler';
 import { getLanguage } from './middleware/getLanguage';
 import { dbCreateConnection } from './orm/dbCreateConnection';
@@ -29,7 +30,7 @@ try {
   });
   app.use(morgan('combined', { stream: accessLogStream }));
 } catch (err) {
-  console.log(err);
+  logger.error('Failed to create access log stream', { error: (err as any).message || err });
 }
 app.use(morgan('combined'));
 
@@ -39,12 +40,12 @@ app.use('/', routes);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  logger.info(`Server running on port ${port}`);
 });
 
 (async () => {
   await dbCreateConnection();
   AppDataSource.entityMetadatas.forEach((meta) => {
-  console.log("✅ Loaded entity:", meta.name, "->", meta.tableName);
-});
+    logger.debug('Loaded entity', { name: meta.name, tableName: meta.tableName });
+  });
 })();
