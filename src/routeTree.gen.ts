@@ -11,8 +11,7 @@
 import { createRootRoute } from '@tanstack/react-router'
 
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as EmploesEmploesRouteImport } from './routes/emploes/emploes'
-import { Route as EmploesEmploeIdRouteImport } from './routes/emploes/$emploeId'
+import { Route as ClassesNameRouteImport } from './routes/classes/$name'
 import { Route as ClassClassesRouteImport } from './routes/class/classes'
 import { Route as ClassClassNameRouteImport } from './routes/class/$className'
 import { Route as ClassClassesNewRouteImport } from './routes/class/classes.new'
@@ -24,14 +23,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EmploesEmploesRoute = EmploesEmploesRouteImport.update({
-  id: '/emploes/emploes',
-  path: '/emploes/emploes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EmploesEmploeIdRoute = EmploesEmploeIdRouteImport.update({
-  id: '/emploes/$emploeId',
-  path: '/emploes/$emploeId',
+const ClassesNameRoute = ClassesNameRouteImport.update({
+  id: '/classes/$name',
+  path: '/classes/$name',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClassClassesRoute = ClassClassesRouteImport.update({
@@ -54,16 +48,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/class/$className': typeof ClassClassNameRoute
   '/class/classes': typeof ClassClassesRouteWithChildren
-  '/emploes/$emploeId': typeof EmploesEmploeIdRoute
-  '/emploes/emploes': typeof EmploesEmploesRoute
+  '/classes/$name': typeof ClassesNameRoute
   '/class/classes/new': typeof ClassClassesNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/class/$className': typeof ClassClassNameRoute
   '/class/classes': typeof ClassClassesRouteWithChildren
-  '/emploes/$emploeId': typeof EmploesEmploeIdRoute
-  '/emploes/emploes': typeof EmploesEmploesRoute
+  '/classes/$name': typeof ClassesNameRoute
   '/class/classes/new': typeof ClassClassesNewRoute
 }
 export interface FileRoutesById {
@@ -71,8 +63,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/class/$className': typeof ClassClassNameRoute
   '/class/classes': typeof ClassClassesRouteWithChildren
-  '/emploes/$emploeId': typeof EmploesEmploeIdRoute
-  '/emploes/emploes': typeof EmploesEmploesRoute
+  '/classes/$name': typeof ClassesNameRoute
   '/class/classes/new': typeof ClassClassesNewRoute
 }
 export interface FileRouteTypes {
@@ -81,24 +72,21 @@ export interface FileRouteTypes {
     | '/'
     | '/class/$className'
     | '/class/classes'
-    | '/emploes/$emploeId'
-    | '/emploes/emploes'
+    | '/classes/$name'
     | '/class/classes/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/class/$className'
     | '/class/classes'
-    | '/emploes/$emploeId'
-    | '/emploes/emploes'
+    | '/classes/$name'
     | '/class/classes/new'
   id:
     | '__root__'
     | '/'
     | '/class/$className'
     | '/class/classes'
-    | '/emploes/$emploeId'
-    | '/emploes/emploes'
+    | '/classes/$name'
     | '/class/classes/new'
   fileRoutesById: FileRoutesById
 }
@@ -106,8 +94,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ClassClassNameRoute: typeof ClassClassNameRoute
   ClassClassesRoute: typeof ClassClassesRouteWithChildren
-  EmploesEmploeIdRoute: typeof EmploesEmploeIdRoute
-  EmploesEmploesRoute: typeof EmploesEmploesRoute
+  ClassesNameRoute: typeof ClassesNameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -119,18 +106,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/emploes/emploes': {
-      id: '/emploes/emploes'
-      path: '/emploes/emploes'
-      fullPath: '/emploes/emploes'
-      preLoaderRoute: typeof EmploesEmploesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/emploes/$emploeId': {
-      id: '/emploes/$emploeId'
-      path: '/emploes/$emploeId'
-      fullPath: '/emploes/$emploeId'
-      preLoaderRoute: typeof EmploesEmploeIdRouteImport
+    '/classes/$name': {
+      id: '/classes/$name'
+      path: '/classes/$name'
+      fullPath: '/classes/$name'
+      preLoaderRoute: typeof ClassesNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/class/classes': {
@@ -173,8 +153,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ClassClassNameRoute: ClassClassNameRoute,
   ClassClassesRoute: ClassClassesRouteWithChildren,
-  EmploesEmploeIdRoute: EmploesEmploeIdRoute,
-  EmploesEmploesRoute: EmploesEmploesRoute,
+  ClassesNameRoute: ClassesNameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

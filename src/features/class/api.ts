@@ -12,8 +12,8 @@ export const getClasses = async (): Promise<Array<Class>> => {
 };
 
 // Отримати один клас за ідентифікатором
-export const getClassById = async (id: string): Promise<Class> => {
-  const response = await apiClient.get(`/classes/${id}`);
+export const getClassById = async (name: string): Promise<Class> => {
+  const response = await apiClient.get(`/classes/${name}`);
   return response.data as Class;
 };
 
@@ -53,9 +53,14 @@ export const useCreateClass = (): UseMutationResult<Class, unknown, Class, unkno
 
   return useMutation<Class, unknown, Class, unknown>({
     mutationFn: createClass,
-    onSuccess: async () => {
+    onSuccess: async (created) => {
       await queryClient.invalidateQueries({ queryKey: ['classes'] });
-      await navigate({ to: '/classes' as string });
+      if (created) {
+        // navigate to the newly created class detail
+        await navigate({ to: '/class/$className' as string, params: { className: created.class_name } });
+      } else {
+        await navigate({ to: '/class/classes' as string });
+      }
     },
   });
 };
@@ -71,8 +76,10 @@ export const useUpdateClass = (): UseMutationResult<Class, unknown, { name: stri
       await queryClient.invalidateQueries({ queryKey: ['classes'] });
       if (updated) {
         queryClient.setQueryData(['class', updated.class_name], updated);
+        await navigate({ to: '/class/$className' as string, params: { className: updated.class_name } });
+      } else {
+        await navigate({ to: '/class/classes' as string });
       }
-      await navigate({ to: '/classes' as string });
     },
   });
 };
@@ -86,7 +93,7 @@ export const useDeleteClass = (): UseMutationResult<void, unknown, string, unkno
     mutationFn: deleteClass,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['classes'] });
-      await navigate({ to: '/classes' as string });
+      await navigate({ to: '/class/classes' as string });
     },
   });
 };

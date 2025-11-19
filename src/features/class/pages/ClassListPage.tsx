@@ -28,14 +28,14 @@ export function ClassListPage(): React.ReactElement {
             <ul>
                 {classes?.map((cls: Class) => (
                     <li key={cls.class_name}>
-                        <Link to={"/classes/$className" as string} params={{ className: cls.class_name } as any}>
+                        <Link to="/class/$className" params={{ className: String(cls.class_name) }}>
                             {cls.class_name}
                         </Link>
                         <button
                             onClick={() => deleteClassMutation.mutate(cls.class_name)}
                             disabled={deleteClassMutation.isPending}
                         >
-                            {deleteClassMutation.isPending ? "Deleting..." : "Delete"}
+                            {deleteClassMutation.isPending ? " Deleting..." : " Delete"}
                         </button>
                     </li>
                 ))}
