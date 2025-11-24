@@ -30,7 +30,7 @@ export class Teacher {
   @OneToMany(() => Timetable, (timetable) => timetable.time_Teacher_id)
   timetables: Timetable[];
 
-  @ManyToOne(() => Class, (cls) => cls.class_Teacher, { onDelete: "CASCADE" })
+  @ManyToOne(() => Class, (cls) => cls.class_Teacher, { onDelete: "CASCADE", nullable: true })
   @JoinColumn({ name: "teacher_class_class_name" }) // explicitly match DB column
   teacher_class: Class;
 }

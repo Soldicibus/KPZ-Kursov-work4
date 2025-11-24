@@ -12,12 +12,13 @@ export class TeacherService {
         teacher_patronymic?: string;
         teacher_phone?: string;
         teacher_email?: string;
+        teacher_position?: string;
         teacher_Class: string; // class_name
     }) {
-        const { teacher_surname, teacher_name, teacher_patronymic, teacher_phone, teacher_email, teacher_Class } = data;
+        const { teacher_surname, teacher_name, teacher_patronymic, teacher_phone, teacher_email, teacher_position, teacher_Class } = data;
 
-        if (!teacher_surname || !teacher_name || !teacher_Class) {
-            throw new Error("Missing required fields: teacher_surname, teacher_name, or teacher_Class");
+        if (!teacher_surname || !teacher_name || !teacher_Class || !teacher_email || !teacher_position) {
+            throw new Error("Missing required fields: teacher_surname, teacher_name, teacher_Class, teacher_email, or teacher_position");
         }
 
         const classEntity = await this.classRepo.findOne({ where: { class_name: teacher_Class } });
@@ -29,6 +30,7 @@ export class TeacherService {
             teacher_patronymic,
             teacher_phone,
             teacher_email,
+            teacher_position,
             teacher_class: classEntity,
         });
 
@@ -59,6 +61,7 @@ export class TeacherService {
             teacher_patronymic?: string;
             teacher_phone?: string;
             teacher_email?: string;
+            teacher_position?: string;
             teacher_Class?: string; // class_name
         }
     ) {

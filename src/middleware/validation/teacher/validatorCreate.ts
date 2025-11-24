@@ -22,6 +22,7 @@ export const validatorCreate = async (req: Request, res: Response, next: NextFun
   teacher_email = !teacher_email ? '' : String(teacher_email).trim();
   teacher_Class = !teacher_Class ? '' : String(teacher_Class).trim();
 
+  // Required fields
   if (teacher_surname === '') {
     errorsValidation.push({ teacher_surname: 'Teacher surname is required' });
   }
@@ -30,41 +31,49 @@ export const validatorCreate = async (req: Request, res: Response, next: NextFun
     errorsValidation.push({ teacher_name: 'Teacher name is required' });
   }
 
-  if (teacher_Class === '') {
-    errorsValidation.push({ teacher_Class: 'Teacher class (class_name) is required' });
-  } else {
-    const classEntity = await classRepository.findOne({ where: { class_name: teacher_Class } });
-    if (!classEntity) {
-      errorsValidation.push({ teacher_Class: `Class '${teacher_Class}' not found` });
-    }
-  }
-
-  if (teacher_email && !validator.isEmail(teacher_email)) {
+  if (teacher_email === '') {
+    errorsValidation.push({ teacher_email: 'Teacher email is required' });
+  } else if (!validator.isEmail(teacher_email)) {
     errorsValidation.push({ teacher_email: 'Email is invalid' });
-  }
-
-  if (teacher_phone && !PHONE_REGEX.test(teacher_phone)) {
-    errorsValidation.push({ teacher_phone: 'Phone format is invalid. Expected format: 0XX-XXX-XXXX' });
-  }
-
-  if (teacher_email) {
+  } else {
     const exists = await teacherRepository.findOne({ where: { teacher_email } });
     if (exists) {
       errorsValidation.push({ teacher_email: `Teacher with email '${teacher_email}' already exists` });
     }
   }
 
+  // Optional: Phone validation
   if (teacher_phone) {
-    const exists = await teacherRepository.findOne({ where: { teacher_phone } });
-    if (exists) {
-      errorsValidation.push({ teacher_phone: `Teacher with phone '${teacher_phone}' already exists` });
+    if (!PHONE_REGEX.test(teacher_phone)) {
+      errorsValidation.push({ teacher_phone: 'Phone format is invalid. Expected format: 0XX-XXX-XXXX' });
+    } else {
+      const exists = await teacherRepository.findOne({ where: { teacher_phone } });
+      if (exists) {
+        errorsValidation.push({ teacher_phone: `Teacher with phone '${teacher_phone}' already exists` });
+      }
+    }
+  }
+
+  // Optional: Class validation
+  if (teacher_Class) {
+    const classEntity = await classRepository.findOne({ where: { class_name: teacher_Class } });
+    if (!classEntity) {
+      errorsValidation.push({ teacher_Class: `Class '${teacher_Class}' not found` });
     }
   }
 
   if (errorsValidation.length !== 0) {
-    const customError = new CustomError(400, 'Validation', 'Create teacher validation error', null, null, errorsValidation);
+    const customError = new CustomError(
+      400,
+      'Validation',
+      'Create teacher validation error',
+      null,
+      null,
+      errorsValidation
+    );
     return next(customError);
   }
+
   return next();
 };
 

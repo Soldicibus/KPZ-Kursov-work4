@@ -2,11 +2,11 @@
 import { Subject } from "../orm/entities/Subject/Subject";
 
 export class SubjectResponseDTO {
-  name: string;
-  description?: string;
+  subject_name: string;
+  subject_desc?: string;
 
   constructor(subject: Subject) {
-    this.name = subject.subject_name;
-    this.description = subject.subject_desc;
+    this.subject_name = subject.subject_name;
+    this.subject_desc = subject.subject_desc;
   }
 }

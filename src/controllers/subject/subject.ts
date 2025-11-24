@@ -8,7 +8,7 @@ export const createSubject = async (req: Request, res: Response) => {
   try {
     const subject = await subjectService.createSubject(req.body);
     const subjectDTO = new SubjectResponseDTO(subject);
-    res.status(201).json({ message: "Subject created successfully", subject: subjectDTO });
+    res.status(201).json(subjectDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
@@ -38,7 +38,7 @@ export const updateSubject = async (req: Request, res: Response) => {
   try {
     const subject = await subjectService.updateSubject(String(req.params.name), req.body);
     const subjectDTO = new SubjectResponseDTO(subject);
-    res.status(200).json({ message: "Subject updated successfully", subject: subjectDTO });
+    res.status(200).json(subjectDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

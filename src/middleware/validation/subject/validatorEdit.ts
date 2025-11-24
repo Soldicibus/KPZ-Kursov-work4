@@ -10,34 +10,45 @@ export const validatorEdit = async (req: Request, res: Response, next: NextFunct
   const errorsValidation: ErrorValidation[] = [];
   const subjectRepository = AppDataSource.getRepository(Subject);
 
-  subject_name = !subject_name ? '' : subject_name;
-  subject_desc = !subject_desc ? '' : subject_desc;
+  const id = decodeURIComponent(req.params.name); // <-- IMPORTANT
 
-  // If subject_name provided, validate length and uniqueness (allow when updating same record)
-  if (subject_name && subject_name.trim() !== '') {
+  subject_name = subject_name ?? '';
+  subject_desc = subject_desc ?? '';
+
+  // SUBJECT NAME CHECK
+  if (subject_name.trim() !== '') {
     if (subject_name.length > 30) {
       errorsValidation.push({ subject_name: 'Subject name must be 30 characters or less' });
     }
 
     const exists = await subjectRepository.findOne({ where: { subject_name } });
-    if (exists && exists.subject_name !== req.params.id) {
+    if (exists && exists.subject_name !== id) {
       errorsValidation.push({ subject_name: `Subject with name '${subject_name}' already exists` });
     }
   }
 
-  // If subject_desc provided, ensure uniqueness (allow same record)
-  if (subject_desc && subject_desc.trim() !== '') {
+  // SUBJECT DESCRIPTION CHECK
+  if (subject_desc.trim() !== '') {
     const descExists = await subjectRepository.findOne({ where: { subject_desc } });
-    if (descExists && descExists.subject_name !== req.params.id) {
+    if (descExists && descExists.subject_name !== id) {
       errorsValidation.push({ subject_desc: 'Subject description must be unique' });
     }
   }
 
-  if (errorsValidation.length !== 0) {
-    const customError = new CustomError(400, 'Validation', 'Edit subject validation error', null, null, errorsValidation);
-    return next(customError);
+  if (errorsValidation.length > 0) {
+    return next(
+      new CustomError(
+        400,
+        'Validation',
+        'Edit subject validation error',
+        null,
+        null,
+        errorsValidation
+      )
+    );
   }
-  return next();
+
+  next();
 };
 
 export default validatorEdit;

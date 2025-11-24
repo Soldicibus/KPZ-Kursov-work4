@@ -8,7 +8,7 @@ export const createClass = async (req: Request, res: Response) => {
   try {
     const newClass = await classService.createClass(req.body);
     const classDTO = new ClassDTO(newClass);
-    res.status(201).json({ message: 'Class created successfully', class: classDTO });
+    res.status(201).json(classDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
@@ -38,7 +38,7 @@ export const updateClass = async (req: Request, res: Response) => {
   try {
     const updatedClass = await classService.updateClass(String(req.params.name), req.body);
     const classDTO = new ClassDTO(updatedClass);
-    res.status(200).json({ message: 'Class updated successfully', class: classDTO });
+    res.status(200).json(classDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

@@ -8,7 +8,7 @@ export const createTeacher = async (req: Request, res: Response) => {
   try {
     const teacher = await teacherService.createTeacher(req.body);
     const teacherDTO = new TeacherDTO(teacher);
-    res.status(201).json({ message: "Teacher created successfully", teacher: teacherDTO });
+    res.status(201).json(teacherDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
@@ -38,7 +38,7 @@ export const updateTeacher = async (req: Request, res: Response) => {
   try {
     const teacher = await teacherService.updateTeacher(Number(req.params.id), req.body);
     const teacherDTO = new TeacherDTO(teacher);
-    res.status(200).json({ message: "Teacher updated successfully", teacher: teacherDTO });
+    res.status(200).json(teacherDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }

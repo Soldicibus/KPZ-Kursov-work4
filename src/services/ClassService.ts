@@ -22,12 +22,13 @@ export class ClassService {
     }
 
     async getAllClasses() {
-        return await this.classRepo.find();
+        return await this.classRepo.find({ relations: { class_Teacher: true } });
     }
 
     async getClassById(className: string) {
         const classEntity = await this.classRepo.findOne({ 
             where: { class_name : className }, 
+            relations: { class_Teacher: true },
         });
         if (!classEntity) throw new Error(`Class with name ${className} not found`);
         return classEntity;
@@ -39,7 +40,7 @@ export class ClassService {
             class_name?: string;
         }
     ) {
-        const classEntity = await this.classRepo.findOne({ where: { class_name: className }});
+        const classEntity = await this.classRepo.findOne({ where: { class_name: className }, relations: { class_Teacher: true }});
         if (!classEntity) throw new Error(`Class with name ${className} not found`);
 
         Object.assign(classEntity, data);
@@ -48,7 +49,7 @@ export class ClassService {
     }
 
     async deleteClass(className: string) {
-        const classEntity = await this.classRepo.findOne({ where: { class_name: className }});
+        const classEntity = await this.classRepo.findOne({ where: { class_name: className }, relations: { class_Teacher: true }});
         if (!classEntity) throw new Error(`Class with name ${className} not found`);
 
         await this.classRepo.remove(classEntity);

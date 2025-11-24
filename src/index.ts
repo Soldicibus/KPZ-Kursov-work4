@@ -40,7 +40,6 @@ app.use('/', routes);
 
 const port = process.env.PORT || 4000;
 
-// Initialize DB first so validation middleware that uses repositories can run safely
 (async () => {
   await dbCreateConnection();
   AppDataSource.entityMetadatas.forEach((meta) => {

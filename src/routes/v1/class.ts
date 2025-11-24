@@ -6,8 +6,8 @@ const router = Router();
 
 router.post('/', validatorCreateClass, createClass);
 router.get('/', getAllClasses);
-router.get('/:id', getClassById);
-router.put('/:id', validatorEditClass, updateClass);
-router.delete('/:id', deleteClass);
+router.get('/:name', getClassById);
+router.put('/:name', validatorEditClass, updateClass);
+router.delete('/:name', deleteClass);
 
 export default router;

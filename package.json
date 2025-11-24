@@ -4,7 +4,10 @@
   "description": "RESTful API boilerplate with Typescript, TypeORM, ExpressJs & Mocha.",
   "scripts": {
     "dev": "debug=* NODE_PATH=./src ts-node-dev --respawn ./src/index.ts",
+    "d": "debug=* NODE_PATH=./src ts-node-dev --respawn ./src/index.ts",
     "build": "rimraf dist && tsc",
+    "b": "rimraf dist && tsc",
+    "bd": "rimraf dist && tsc && debug=* NODE_PATH=./src ts-node-dev --respawn ./src/index.ts",
     "start": "NODE_PATH=./dist node ./dist/index.js",
     "prepare": "husky install",
     "lint": "eslint --max-warnings 0 . && npm run tsc",

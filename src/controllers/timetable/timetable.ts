@@ -8,7 +8,7 @@ export const createTimetable = async (req: Request, res: Response) => {
   try {
     const timetable = await timetableService.createTimetableEntry(req.body);
     const timetableDTO = new TimetableDTO(timetable);
-    res.status(201).json({ message: "Timetable created successfully", timetable: timetableDTO });
+    res.status(201).json(timetableDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
@@ -38,7 +38,7 @@ export const updateTimetable = async (req: Request, res: Response) => {
   try {
     const timetable = await timetableService.updateTimetableEntry(Number(req.params.id), req.body);
     const timetableDTO = new TimetableDTO(timetable);
-    res.status(200).json({ message: "Timetable updated successfully", timetable: timetableDTO });
+    res.status(200).json(timetableDTO);
   } catch (err: any) {
     res.status(400).json({ error: err.message });
   }
