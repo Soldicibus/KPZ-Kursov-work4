@@ -8,4 +8,5 @@ export interface Class {
     class_name: string;
     description?: string;
     teachers?: Array<TeacherClass> | null;
+    head_teacher?: { teacher_id: number; teacher_name: string; teacher_surname: string } | null;
 }

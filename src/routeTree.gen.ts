@@ -11,9 +11,18 @@
 import { createRootRoute } from '@tanstack/react-router'
 
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TimetableTimetableRouteImport } from './routes/timetable/timetable'
+import { Route as TimetableTimetableNameRouteImport } from './routes/timetable/$timetableName'
+import { Route as TeachersTeachersRouteImport } from './routes/teachers/teachers'
+import { Route as TeachersTeacherIdRouteImport } from './routes/teachers/$teacherId'
+import { Route as SubjectSubjectsRouteImport } from './routes/subject/subjects'
+import { Route as SubjectSubjectNameRouteImport } from './routes/subject/$subjectName'
 import { Route as ClassesNameRouteImport } from './routes/classes/$name'
 import { Route as ClassClassesRouteImport } from './routes/class/classes'
 import { Route as ClassClassNameRouteImport } from './routes/class/$className'
+import { Route as TimetableTimetableNewRouteImport } from './routes/timetable/timetable.new'
+import { Route as TeachersTeacherNewRouteImport } from './routes/teachers/teacher.new'
+import { Route as SubjectSubjectsNewRouteImport } from './routes/subject/subjects.new'
 import { Route as ClassClassesNewRouteImport } from './routes/class/classes.new'
 
 const rootRouteImport = createRootRoute()
@@ -21,6 +30,36 @@ const rootRouteImport = createRootRoute()
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimetableTimetableRoute = TimetableTimetableRouteImport.update({
+  id: '/timetable/timetable',
+  path: '/timetable/timetable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimetableTimetableNameRoute = TimetableTimetableNameRouteImport.update({
+  id: '/timetable/$timetableName',
+  path: '/timetable/$timetableName',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeachersTeachersRoute = TeachersTeachersRouteImport.update({
+  id: '/teachers/teachers',
+  path: '/teachers/teachers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeachersTeacherIdRoute = TeachersTeacherIdRouteImport.update({
+  id: '/teachers/$teacherId',
+  path: '/teachers/$teacherId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubjectSubjectsRoute = SubjectSubjectsRouteImport.update({
+  id: '/subject/subjects',
+  path: '/subject/subjects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubjectSubjectNameRoute = SubjectSubjectNameRouteImport.update({
+  id: '/subject/$subjectName',
+  path: '/subject/$subjectName',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClassesNameRoute = ClassesNameRouteImport.update({
@@ -38,6 +77,21 @@ const ClassClassNameRoute = ClassClassNameRouteImport.update({
   path: '/class/$className',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TimetableTimetableNewRoute = TimetableTimetableNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => TimetableTimetableRoute,
+} as any)
+const TeachersTeacherNewRoute = TeachersTeacherNewRouteImport.update({
+  id: '/teachers/teacher/new',
+  path: '/teachers/teacher/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SubjectSubjectsNewRoute = SubjectSubjectsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => SubjectSubjectsRoute,
+} as any)
 const ClassClassesNewRoute = ClassClassesNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -49,14 +103,32 @@ export interface FileRoutesByFullPath {
   '/class/$className': typeof ClassClassNameRoute
   '/class/classes': typeof ClassClassesRouteWithChildren
   '/classes/$name': typeof ClassesNameRoute
+  '/subject/$subjectName': typeof SubjectSubjectNameRoute
+  '/subject/subjects': typeof SubjectSubjectsRouteWithChildren
+  '/teachers/$teacherId': typeof TeachersTeacherIdRoute
+  '/teachers/teachers': typeof TeachersTeachersRoute
+  '/timetable/$timetableName': typeof TimetableTimetableNameRoute
+  '/timetable/timetable': typeof TimetableTimetableRouteWithChildren
   '/class/classes/new': typeof ClassClassesNewRoute
+  '/subject/subjects/new': typeof SubjectSubjectsNewRoute
+  '/teachers/teacher/new': typeof TeachersTeacherNewRoute
+  '/timetable/timetable/new': typeof TimetableTimetableNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/class/$className': typeof ClassClassNameRoute
   '/class/classes': typeof ClassClassesRouteWithChildren
   '/classes/$name': typeof ClassesNameRoute
+  '/subject/$subjectName': typeof SubjectSubjectNameRoute
+  '/subject/subjects': typeof SubjectSubjectsRouteWithChildren
+  '/teachers/$teacherId': typeof TeachersTeacherIdRoute
+  '/teachers/teachers': typeof TeachersTeachersRoute
+  '/timetable/$timetableName': typeof TimetableTimetableNameRoute
+  '/timetable/timetable': typeof TimetableTimetableRouteWithChildren
   '/class/classes/new': typeof ClassClassesNewRoute
+  '/subject/subjects/new': typeof SubjectSubjectsNewRoute
+  '/teachers/teacher/new': typeof TeachersTeacherNewRoute
+  '/timetable/timetable/new': typeof TimetableTimetableNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -64,7 +136,16 @@ export interface FileRoutesById {
   '/class/$className': typeof ClassClassNameRoute
   '/class/classes': typeof ClassClassesRouteWithChildren
   '/classes/$name': typeof ClassesNameRoute
+  '/subject/$subjectName': typeof SubjectSubjectNameRoute
+  '/subject/subjects': typeof SubjectSubjectsRouteWithChildren
+  '/teachers/$teacherId': typeof TeachersTeacherIdRoute
+  '/teachers/teachers': typeof TeachersTeachersRoute
+  '/timetable/$timetableName': typeof TimetableTimetableNameRoute
+  '/timetable/timetable': typeof TimetableTimetableRouteWithChildren
   '/class/classes/new': typeof ClassClassesNewRoute
+  '/subject/subjects/new': typeof SubjectSubjectsNewRoute
+  '/teachers/teacher/new': typeof TeachersTeacherNewRoute
+  '/timetable/timetable/new': typeof TimetableTimetableNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -73,21 +154,48 @@ export interface FileRouteTypes {
     | '/class/$className'
     | '/class/classes'
     | '/classes/$name'
+    | '/subject/$subjectName'
+    | '/subject/subjects'
+    | '/teachers/$teacherId'
+    | '/teachers/teachers'
+    | '/timetable/$timetableName'
+    | '/timetable/timetable'
     | '/class/classes/new'
+    | '/subject/subjects/new'
+    | '/teachers/teacher/new'
+    | '/timetable/timetable/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/class/$className'
     | '/class/classes'
     | '/classes/$name'
+    | '/subject/$subjectName'
+    | '/subject/subjects'
+    | '/teachers/$teacherId'
+    | '/teachers/teachers'
+    | '/timetable/$timetableName'
+    | '/timetable/timetable'
     | '/class/classes/new'
+    | '/subject/subjects/new'
+    | '/teachers/teacher/new'
+    | '/timetable/timetable/new'
   id:
     | '__root__'
     | '/'
     | '/class/$className'
     | '/class/classes'
     | '/classes/$name'
+    | '/subject/$subjectName'
+    | '/subject/subjects'
+    | '/teachers/$teacherId'
+    | '/teachers/teachers'
+    | '/timetable/$timetableName'
+    | '/timetable/timetable'
     | '/class/classes/new'
+    | '/subject/subjects/new'
+    | '/teachers/teacher/new'
+    | '/timetable/timetable/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,6 +203,13 @@ export interface RootRouteChildren {
   ClassClassNameRoute: typeof ClassClassNameRoute
   ClassClassesRoute: typeof ClassClassesRouteWithChildren
   ClassesNameRoute: typeof ClassesNameRoute
+  SubjectSubjectNameRoute: typeof SubjectSubjectNameRoute
+  SubjectSubjectsRoute: typeof SubjectSubjectsRouteWithChildren
+  TeachersTeacherIdRoute: typeof TeachersTeacherIdRoute
+  TeachersTeachersRoute: typeof TeachersTeachersRoute
+  TimetableTimetableNameRoute: typeof TimetableTimetableNameRoute
+  TimetableTimetableRoute: typeof TimetableTimetableRouteWithChildren
+  TeachersTeacherNewRoute: typeof TeachersTeacherNewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -104,6 +219,48 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timetable/timetable': {
+      id: '/timetable/timetable'
+      path: '/timetable/timetable'
+      fullPath: '/timetable/timetable'
+      preLoaderRoute: typeof TimetableTimetableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timetable/$timetableName': {
+      id: '/timetable/$timetableName'
+      path: '/timetable/$timetableName'
+      fullPath: '/timetable/$timetableName'
+      preLoaderRoute: typeof TimetableTimetableNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teachers/teachers': {
+      id: '/teachers/teachers'
+      path: '/teachers/teachers'
+      fullPath: '/teachers/teachers'
+      preLoaderRoute: typeof TeachersTeachersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teachers/$teacherId': {
+      id: '/teachers/$teacherId'
+      path: '/teachers/$teacherId'
+      fullPath: '/teachers/$teacherId'
+      preLoaderRoute: typeof TeachersTeacherIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subject/subjects': {
+      id: '/subject/subjects'
+      path: '/subject/subjects'
+      fullPath: '/subject/subjects'
+      preLoaderRoute: typeof SubjectSubjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subject/$subjectName': {
+      id: '/subject/$subjectName'
+      path: '/subject/$subjectName'
+      fullPath: '/subject/$subjectName'
+      preLoaderRoute: typeof SubjectSubjectNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/classes/$name': {
@@ -127,6 +284,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassClassNameRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/timetable/timetable/new': {
+      id: '/timetable/timetable/new'
+      path: '/new'
+      fullPath: '/timetable/timetable/new'
+      preLoaderRoute: typeof TimetableTimetableNewRouteImport
+      parentRoute: typeof TimetableTimetableRoute
+    }
+    '/teachers/teacher/new': {
+      id: '/teachers/teacher/new'
+      path: '/teachers/teacher/new'
+      fullPath: '/teachers/teacher/new'
+      preLoaderRoute: typeof TeachersTeacherNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/subject/subjects/new': {
+      id: '/subject/subjects/new'
+      path: '/new'
+      fullPath: '/subject/subjects/new'
+      preLoaderRoute: typeof SubjectSubjectsNewRouteImport
+      parentRoute: typeof SubjectSubjectsRoute
+    }
     '/class/classes/new': {
       id: '/class/classes/new'
       path: '/new'
@@ -149,11 +327,41 @@ const ClassClassesRouteWithChildren = ClassClassesRoute._addFileChildren(
   ClassClassesRouteChildren,
 )
 
+interface SubjectSubjectsRouteChildren {
+  SubjectSubjectsNewRoute: typeof SubjectSubjectsNewRoute
+}
+
+const SubjectSubjectsRouteChildren: SubjectSubjectsRouteChildren = {
+  SubjectSubjectsNewRoute: SubjectSubjectsNewRoute,
+}
+
+const SubjectSubjectsRouteWithChildren = SubjectSubjectsRoute._addFileChildren(
+  SubjectSubjectsRouteChildren,
+)
+
+interface TimetableTimetableRouteChildren {
+  TimetableTimetableNewRoute: typeof TimetableTimetableNewRoute
+}
+
+const TimetableTimetableRouteChildren: TimetableTimetableRouteChildren = {
+  TimetableTimetableNewRoute: TimetableTimetableNewRoute,
+}
+
+const TimetableTimetableRouteWithChildren =
+  TimetableTimetableRoute._addFileChildren(TimetableTimetableRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ClassClassNameRoute: ClassClassNameRoute,
   ClassClassesRoute: ClassClassesRouteWithChildren,
   ClassesNameRoute: ClassesNameRoute,
+  SubjectSubjectNameRoute: SubjectSubjectNameRoute,
+  SubjectSubjectsRoute: SubjectSubjectsRouteWithChildren,
+  TeachersTeacherIdRoute: TeachersTeacherIdRoute,
+  TeachersTeachersRoute: TeachersTeachersRoute,
+  TimetableTimetableNameRoute: TimetableTimetableNameRoute,
+  TimetableTimetableRoute: TimetableTimetableRouteWithChildren,
+  TeachersTeacherNewRoute: TeachersTeacherNewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

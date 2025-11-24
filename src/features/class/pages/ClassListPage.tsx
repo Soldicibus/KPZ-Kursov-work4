@@ -5,7 +5,18 @@ import { useState } from "react";
 import type { Class } from "../types";
 
 export function ClassListPage(): React.ReactElement {
-    const classes = Route.useLoaderData() as Array<Class>;
+    const classesData = Route.useLoaderData() as unknown;
+    // Defensive: loader may return a single object or something unexpected.
+    const classes: Array<Class> = Array.isArray(classesData)
+        ? (classesData as Array<Class>)
+        : classesData && typeof classesData === 'object' && 'class_name' in (classesData as any)
+        ? [classesData as Class]
+        : [];
+
+    // DEBUG: show raw loader data if we ended up with empty classes
+    // Remove or comment out after debugging.
+    // eslint-disable-next-line no-console
+    console.log('ClassList loader raw data:', classesData);
     const deleteClassMutation = useDeleteClass();
     const createClassMutation = useCreateClass();
     

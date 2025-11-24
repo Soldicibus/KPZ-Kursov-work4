@@ -14,8 +14,8 @@ export function ClassEntityPage(): React.ReactElement {
     });
     if (classEntity && isEditing && formData.name === "") {
         setFormData({
-            name: classEntity.class_name,
-            teacher: classEntity.teachers[0]?.teacher_id ? `${classEntity.teachers[0]?.teacher_surname} ${classEntity.teachers[0]?.teacher_name}` : "",
+            name: classEntity.class_name ?? "",
+            teacher: classEntity.head_teacher ? `${classEntity.head_teacher.teacher_surname} ${classEntity.head_teacher.teacher_name}` : "",
         });
     }
     
@@ -74,7 +74,7 @@ export function ClassEntityPage(): React.ReactElement {
             ) : (
                 <div>
                     <p><strong>Class Name:</strong> {classEntity.class_name}</p>
-                    <p><strong>Head Teacher:</strong> {classEntity.teachers && classEntity.teachers.length > 0 ? `${classEntity.teachers[0].teacher_surname} ${classEntity.teachers[0].teacher_name}` : 'No head teacher assigned'}</p>
+                    <p><strong>Head Teacher:</strong> {classEntity.head_teacher ? `${classEntity.head_teacher.teacher_surname} ${classEntity.head_teacher.teacher_name}` : 'No head teacher assigned'}</p>
                     <button onClick={() => setIsEditing(true)}>Edit Class</button>
                 </div>
             )}

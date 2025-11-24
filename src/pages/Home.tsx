@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import type { FunctionComponent } from "../common/types";
+import { Link } from "@tanstack/react-router";
 
 export const Home = (): FunctionComponent => {
 	const { t, i18n } = useTranslation();
@@ -22,6 +23,14 @@ export const Home = (): FunctionComponent => {
 			>
 				translate
 			</button>
+			<button
+				className="hover:cursor-pointer"
+				type="submit"
+				>
+			</button>
+			<Link to="/class/classes">
+										Classes
+			</Link>
 		</div>
 	);
 };
