@@ -46,8 +46,8 @@ export const useTeacherById = (id: number) => {
 };
 
 // Хук для створення вчителя  
-export const useCreateTeacher = (): UseMutationResult<TeacherCreateUpdate, unknown, TeacherCreateUpdate, unknown> => {
-    return useMutation<TeacherCreateUpdate, unknown, TeacherCreateUpdate, unknown>({
+export const useCreateTeacher = (): UseMutationResult<Teacher, unknown, TeacherCreateUpdate, unknown> => {
+    return useMutation<Teacher, unknown, TeacherCreateUpdate, unknown>({
         mutationFn: createTeacher,
     });
 };

@@ -12,7 +12,7 @@ import { createRootRoute } from '@tanstack/react-router'
 
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TimetableTimetableRouteImport } from './routes/timetable/timetable'
-import { Route as TimetableTimetableNameRouteImport } from './routes/timetable/$timetableName'
+import { Route as TimetableTimetableIdRouteImport } from './routes/timetable/$timetableId'
 import { Route as TeachersTeachersRouteImport } from './routes/teachers/teachers'
 import { Route as TeachersTeacherIdRouteImport } from './routes/teachers/$teacherId'
 import { Route as SubjectSubjectsRouteImport } from './routes/subject/subjects'
@@ -37,9 +37,9 @@ const TimetableTimetableRoute = TimetableTimetableRouteImport.update({
   path: '/timetable/timetable',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TimetableTimetableNameRoute = TimetableTimetableNameRouteImport.update({
-  id: '/timetable/$timetableName',
-  path: '/timetable/$timetableName',
+const TimetableTimetableIdRoute = TimetableTimetableIdRouteImport.update({
+  id: '/timetable/$timetableId',
+  path: '/timetable/$timetableId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeachersTeachersRoute = TeachersTeachersRouteImport.update({
@@ -107,7 +107,7 @@ export interface FileRoutesByFullPath {
   '/subject/subjects': typeof SubjectSubjectsRouteWithChildren
   '/teachers/$teacherId': typeof TeachersTeacherIdRoute
   '/teachers/teachers': typeof TeachersTeachersRoute
-  '/timetable/$timetableName': typeof TimetableTimetableNameRoute
+  '/timetable/$timetableId': typeof TimetableTimetableIdRoute
   '/timetable/timetable': typeof TimetableTimetableRouteWithChildren
   '/class/classes/new': typeof ClassClassesNewRoute
   '/subject/subjects/new': typeof SubjectSubjectsNewRoute
@@ -123,7 +123,7 @@ export interface FileRoutesByTo {
   '/subject/subjects': typeof SubjectSubjectsRouteWithChildren
   '/teachers/$teacherId': typeof TeachersTeacherIdRoute
   '/teachers/teachers': typeof TeachersTeachersRoute
-  '/timetable/$timetableName': typeof TimetableTimetableNameRoute
+  '/timetable/$timetableId': typeof TimetableTimetableIdRoute
   '/timetable/timetable': typeof TimetableTimetableRouteWithChildren
   '/class/classes/new': typeof ClassClassesNewRoute
   '/subject/subjects/new': typeof SubjectSubjectsNewRoute
@@ -140,7 +140,7 @@ export interface FileRoutesById {
   '/subject/subjects': typeof SubjectSubjectsRouteWithChildren
   '/teachers/$teacherId': typeof TeachersTeacherIdRoute
   '/teachers/teachers': typeof TeachersTeachersRoute
-  '/timetable/$timetableName': typeof TimetableTimetableNameRoute
+  '/timetable/$timetableId': typeof TimetableTimetableIdRoute
   '/timetable/timetable': typeof TimetableTimetableRouteWithChildren
   '/class/classes/new': typeof ClassClassesNewRoute
   '/subject/subjects/new': typeof SubjectSubjectsNewRoute
@@ -158,7 +158,7 @@ export interface FileRouteTypes {
     | '/subject/subjects'
     | '/teachers/$teacherId'
     | '/teachers/teachers'
-    | '/timetable/$timetableName'
+    | '/timetable/$timetableId'
     | '/timetable/timetable'
     | '/class/classes/new'
     | '/subject/subjects/new'
@@ -174,7 +174,7 @@ export interface FileRouteTypes {
     | '/subject/subjects'
     | '/teachers/$teacherId'
     | '/teachers/teachers'
-    | '/timetable/$timetableName'
+    | '/timetable/$timetableId'
     | '/timetable/timetable'
     | '/class/classes/new'
     | '/subject/subjects/new'
@@ -190,7 +190,7 @@ export interface FileRouteTypes {
     | '/subject/subjects'
     | '/teachers/$teacherId'
     | '/teachers/teachers'
-    | '/timetable/$timetableName'
+    | '/timetable/$timetableId'
     | '/timetable/timetable'
     | '/class/classes/new'
     | '/subject/subjects/new'
@@ -207,7 +207,7 @@ export interface RootRouteChildren {
   SubjectSubjectsRoute: typeof SubjectSubjectsRouteWithChildren
   TeachersTeacherIdRoute: typeof TeachersTeacherIdRoute
   TeachersTeachersRoute: typeof TeachersTeachersRoute
-  TimetableTimetableNameRoute: typeof TimetableTimetableNameRoute
+  TimetableTimetableIdRoute: typeof TimetableTimetableIdRoute
   TimetableTimetableRoute: typeof TimetableTimetableRouteWithChildren
   TeachersTeacherNewRoute: typeof TeachersTeacherNewRoute
 }
@@ -228,11 +228,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimetableTimetableRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/timetable/$timetableName': {
-      id: '/timetable/$timetableName'
-      path: '/timetable/$timetableName'
-      fullPath: '/timetable/$timetableName'
-      preLoaderRoute: typeof TimetableTimetableNameRouteImport
+    '/timetable/$timetableId': {
+      id: '/timetable/$timetableId'
+      path: '/timetable/$timetableId'
+      fullPath: '/timetable/$timetableId'
+      preLoaderRoute: typeof TimetableTimetableIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/teachers/teachers': {
@@ -359,7 +359,7 @@ const rootRouteChildren: RootRouteChildren = {
   SubjectSubjectsRoute: SubjectSubjectsRouteWithChildren,
   TeachersTeacherIdRoute: TeachersTeacherIdRoute,
   TeachersTeachersRoute: TeachersTeachersRoute,
-  TimetableTimetableNameRoute: TimetableTimetableNameRoute,
+  TimetableTimetableIdRoute: TimetableTimetableIdRoute,
   TimetableTimetableRoute: TimetableTimetableRouteWithChildren,
   TeachersTeacherNewRoute: TeachersTeacherNewRoute,
 }

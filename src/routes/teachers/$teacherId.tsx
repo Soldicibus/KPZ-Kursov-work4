@@ -14,3 +14,5 @@ export const Route = createFileRoute('/teachers/$teacherId')({
     errorComponent: ({ error }) => <div>Error: {error.message}</div>,
     component: TeacherEntityPage,
 })
+
+export default Route

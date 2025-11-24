@@ -18,4 +18,5 @@ export interface TeacherCreateUpdate {
   teacher_patronymic?: string;
   teacher_phone?: string;
   teacher_position?: string;
+  teacher_Class: string; // class_name
 }

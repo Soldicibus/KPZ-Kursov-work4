@@ -1,12 +1,9 @@
-export interface TeacherClass {
-    teacher_id?: number;
-    teacher_name?: string;
-    teacher_surname?: string;
-}
+import type { Teacher } from "../teacher/types";
 
 export interface Class {
     class_name: string;
     description?: string;
-    teachers?: Array<TeacherClass> | null;
-    head_teacher?: { teacher_id: number; teacher_name: string; teacher_surname: string } | null;
+    teacher?: Teacher | null;
+        teacher_name?: string;
+        teacher_surname?: string;
 }

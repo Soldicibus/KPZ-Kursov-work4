@@ -18,6 +18,7 @@ export function TeacherEntityPage(): React.ReactElement {
         teacher_name: "",
         teacher_surname: "",
         teacher_email: "",
+        teacher_position: "",
     });
 
     // Initialize form when teacher data is loaded
@@ -27,6 +28,7 @@ export function TeacherEntityPage(): React.ReactElement {
             teacher_name: teacher.teacher_name ?? "",
             teacher_surname: teacher.teacher_surname ?? "",
             teacher_email: teacher.teacher_email ?? "",
+            teacher_position: teacher.teacher_position ?? "",
         });
     }, [teacher]);
 
@@ -81,6 +83,15 @@ export function TeacherEntityPage(): React.ReactElement {
                             onChange={handleChange}
                         />
                     </label>
+                    <label>
+                        Position:
+                        <input
+                            type="text"
+                            name="teacher_position"
+                            value={formData.teacher_position}
+                            onChange={handleChange}
+                        />
+                    </label>
                     <button type="submit" disabled={updateMutation.isPending}>
                         {updateMutation.isPending ? "Saving..." : "Save"}
                     </button>
@@ -93,6 +104,7 @@ export function TeacherEntityPage(): React.ReactElement {
                     <p><strong>Name:</strong> {teacher.teacher_name}</p>
                     <p><strong>Surname:</strong> {teacher.teacher_surname}</p>
                     <p><strong>Email:</strong> {teacher.teacher_email}</p>
+                    <p><strong>Position:</strong> {teacher.teacher_position}</p>
                     <button onClick={() => setIsEditing(true)}>Edit</button>
                 </div>
             )}

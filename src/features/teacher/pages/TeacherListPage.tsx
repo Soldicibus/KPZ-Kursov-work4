@@ -13,6 +13,8 @@ export function TeacherListPage(): React.ReactElement {
     const [newTeacherSurname, setNewTeacherSurname] = useState("");
     const [newTeacherEmail, setNewTeacherEmail] = useState("");
     const [newTeacherPhone, setNewTeacherPhone] = useState("");
+    const [newTeacherPosition, setNewTeacherPosition] = useState("");
+    const [newTeacherClass, setNewTeacherClass] = useState("");
 
     const handleCreateTeacher = () => {
         if (!newTeacherName.trim() || !newTeacherSurname.trim() || !newTeacherEmail.trim() || !newTeacherPhone.trim()) return;
@@ -23,6 +25,8 @@ export function TeacherListPage(): React.ReactElement {
                 teacher_surname: newTeacherSurname,
                 teacher_email: newTeacherEmail,
                 teacher_phone: newTeacherPhone,
+                teacher_position: newTeacherPosition,
+                teacher_Class: newTeacherClass,
             },
             {
                 onSuccess: () => {
@@ -30,6 +34,8 @@ export function TeacherListPage(): React.ReactElement {
                     setNewTeacherSurname("");
                     setNewTeacherEmail("");
                     setNewTeacherPhone("");
+                    setNewTeacherPosition("");
+                    setNewTeacherClass("");
                 }
             }
         );
@@ -86,6 +92,20 @@ export function TeacherListPage(): React.ReactElement {
                     placeholder="Phone"
                     value={newTeacherPhone}
                     onChange={(e) => setNewTeacherPhone(e.target.value)}
+                />
+
+                <input
+                    type="text"
+                    placeholder="Position"
+                    value={newTeacherPosition}
+                    onChange={(e) => setNewTeacherPosition(e.target.value)}
+                />
+
+                <input
+                    type="text"
+                    placeholder="Class"
+                    value={newTeacherClass}
+                    onChange={(e) => setNewTeacherClass(e.target.value)}
                 />
 
                 <button
