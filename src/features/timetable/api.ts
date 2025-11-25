@@ -82,7 +82,7 @@ export const useDeleteTimetableEntry = (): UseMutationResult<void, unknown, numb
   
   return useMutation<void, unknown, number, unknown>({
     mutationFn: deleteTimetableEntry,
-    onSuccess: async (data, id) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['timetable'] });
     },
   });

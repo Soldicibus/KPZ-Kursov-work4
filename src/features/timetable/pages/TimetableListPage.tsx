@@ -1,5 +1,5 @@
 import { Route } from "@/routes/timetable/timetable";
-import { useTimetable, useCreateTimetableEntry, useDeleteTimetableEntry } from "@/features/timetable/api";
+import { useCreateTimetableEntry, useDeleteTimetableEntry } from "@/features/timetable/api";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import type { Timetable } from "../types";
