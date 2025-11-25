@@ -31,6 +31,15 @@ export const Home = (): FunctionComponent => {
 			<Link to="/class/classes">
 										Classes
 			</Link>
+			<Link to="/teachers/teachers">
+										Teachers
+			</Link>
+			<Link to="/subject/subjects">
+										Subjects
+			</Link>
+			<Link to="/timetable/timetable">
+										Timetables
+			</Link>
 		</div>
 	);
 };

@@ -3,6 +3,7 @@ import { useTimetable, useCreateTimetableEntry, useDeleteTimetableEntry } from "
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import type { Timetable } from "../types";
+import { timetableSchema } from "../scheme";
 
 export function TimetableListPage(): React.ReactElement {
     const timetable = Route.useLoaderData() as Timetable[];
@@ -16,26 +17,31 @@ export function TimetableListPage(): React.ReactElement {
     const [newClassName, setNewClassName] = useState("");
 
     const handleCreateTimetableEntry = () => {
-        if (!newDayOfWeek.trim() || !newTime.trim() || !newSubjectName.trim() || newTeacherId <= 0 || !newClassName.trim()) return;
+        const formData = {
+            time_day_of_week: newDayOfWeek,
+            time_time: newTime,
+            subject_name: newSubjectName,
+            teacher_id: newTeacherId,
+            class_name: newClassName,
+        };
 
-        createTimetableMutation.mutate(
-            {
-                time_day_of_week: newDayOfWeek,
-                time_time: newTime,
-                subject_name: newSubjectName,
-                teacher_id: newTeacherId,
-                class_name: newClassName,
-            },
-            {
-                onSuccess: () => {
-                    setNewDayOfWeek("");
-                    setNewTime("");
-                    setNewSubjectName("");
-                    setNewTeacherId(0);
-                    setNewClassName("");
-                }
+        // Validate with Zod
+        const parseResult = timetableSchema.safeParse(formData);
+
+        if (!parseResult.success) {
+            console.error(parseResult.error.format());
+            return;
+        }
+
+        createTimetableMutation.mutate(parseResult.data, {
+            onSuccess: () => {
+                setNewDayOfWeek("");
+                setNewTime("");
+                setNewSubjectName("");
+                setNewTeacherId(0);
+                setNewClassName("");
             }
-        );
+        });
     };
 
     return (
