@@ -42,13 +42,14 @@ export function TeacherListPage(): React.ReactElement {
     };
 
     return (
-        <div>
-            <h1>Teacher List</h1>
+        <div className="max-w-3xl mx-auto p-6 bg-white/80 dark:bg-slate-800 rounded-lg shadow text-slate-900 dark:text-white">
+            <h1 className="text-2xl font-semibold mb-4">Teacher List</h1>
 
-            <ul>
+            <ul className="space-y-3">
                 {teachers?.map((teacher) => (
-                    <li key={teacher.teacher_id}>
+                    <li key={teacher.teacher_id} className="flex items-center justify-between gap-4 p-3 bg-white/40 dark:bg-slate-700/40 rounded">
                         <Link
+                            className="text-blue-400 hover:underline"
                             to={"/teachers/$teacherId" as any}
                             params={{ teacherId: String(teacher.teacher_id) } as any}
                         >
@@ -56,6 +57,7 @@ export function TeacherListPage(): React.ReactElement {
                         </Link>
 
                         <button
+                            className="bg-red-600 text-white px-3 py-1 rounded"
                             onClick={() => deleteTeacherMutation.mutate(teacher.teacher_id)}
                             disabled={deleteTeacherMutation.isPending}
                         >
@@ -65,8 +67,9 @@ export function TeacherListPage(): React.ReactElement {
                 ))}
             </ul>
 
-            <div>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
+                    className="border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     type="text"
                     placeholder="Name"
                     value={newTeacherName}
@@ -74,6 +77,7 @@ export function TeacherListPage(): React.ReactElement {
                 />
 
                 <input
+                    className="border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     type="text"
                     placeholder="Surname"
                     value={newTeacherSurname}
@@ -81,6 +85,7 @@ export function TeacherListPage(): React.ReactElement {
                 />
 
                 <input
+                    className="border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     type="email"
                     placeholder="Email"
                     value={newTeacherEmail}
@@ -88,6 +93,7 @@ export function TeacherListPage(): React.ReactElement {
                 />
 
                 <input
+                    className="border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     type="text"
                     placeholder="Phone"
                     value={newTeacherPhone}
@@ -95,6 +101,7 @@ export function TeacherListPage(): React.ReactElement {
                 />
 
                 <input
+                    className="border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     type="text"
                     placeholder="Position"
                     value={newTeacherPosition}
@@ -102,6 +109,7 @@ export function TeacherListPage(): React.ReactElement {
                 />
 
                 <input
+                    className="border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                     type="text"
                     placeholder="Class"
                     value={newTeacherClass}
@@ -109,6 +117,7 @@ export function TeacherListPage(): React.ReactElement {
                 />
 
                 <button
+                    className="bg-green-600 text-white px-4 py-2 rounded"
                     onClick={handleCreateTeacher}
                     disabled={createTeacherMutation.isPending}
                 >

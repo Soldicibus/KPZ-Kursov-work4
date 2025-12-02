@@ -48,64 +48,70 @@ export function TeacherEntityPage(): React.ReactElement {
     };
 
     if (!teacher) {
-        return <p>Loading teacher data...</p>;
+        return <p className="text-center py-6 text-slate-900 dark:text-white">Loading teacher data...</p>;
     }
 
     return (
-        <div>
-            <h1>Teacher Details</h1>
+        <div className="max-w-3xl mx-auto p-6 bg-white/80 dark:bg-slate-800 rounded-lg shadow text-slate-900 dark:text-white">
+            <h1 className="text-2xl font-semibold mb-4">Teacher Details</h1>
             {isEditing ? (
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Name:
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <label className="block">
+                        <div className="text-sm font-medium mb-1">Name</div>
                         <input
+                            className="w-full border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                             type="text"
                             name="teacher_name"
                             value={formData.teacher_name}
                             onChange={handleChange}
                         />
                     </label>
-                    <label>
-                        Surname:
+                    <label className="block">
+                        <div className="text-sm font-medium mb-1">Surname</div>
                         <input
+                            className="w-full border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                             type="text"
                             name="teacher_surname"
                             value={formData.teacher_surname}
                             onChange={handleChange}
                         />
                     </label>
-                    <label>
-                        Email:
+                    <label className="block">
+                        <div className="text-sm font-medium mb-1">Email</div>
                         <input
+                            className="w-full border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                             type="text"
                             name="teacher_email"
                             value={formData.teacher_email}
                             onChange={handleChange}
                         />
                     </label>
-                    <label>
-                        Position:
+                    <label className="block">
+                        <div className="text-sm font-medium mb-1">Position</div>
                         <input
+                            className="w-full border rounded px-3 py-2 bg-white dark:bg-slate-700 text-slate-900 dark:text-white"
                             type="text"
                             name="teacher_position"
                             value={formData.teacher_position}
                             onChange={handleChange}
                         />
                     </label>
-                    <button type="submit" disabled={updateMutation.isPending}>
-                        {updateMutation.isPending ? "Saving..." : "Save"}
-                    </button>
-                    <button type="button" onClick={() => setIsEditing(false)}>
-                        Cancel
-                    </button>
+                    <div className="flex gap-3">
+                        <button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit" disabled={updateMutation.isPending}>
+                            {updateMutation.isPending ? "Saving..." : "Save"}
+                        </button>
+                        <button className="bg-gray-200 px-4 py-2 rounded" type="button" onClick={() => setIsEditing(false)}>
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             ) : (
-                <div>
+                <div className="space-y-2">
                     <p><strong>Name:</strong> {teacher.teacher_name}</p>
                     <p><strong>Surname:</strong> {teacher.teacher_surname}</p>
                     <p><strong>Email:</strong> {teacher.teacher_email}</p>
                     <p><strong>Position:</strong> {teacher.teacher_position}</p>
-                    <button onClick={() => setIsEditing(true)}>Edit</button>
+                    <button className="mt-3 bg-blue-600 text-white px-3 py-1 rounded" onClick={() => setIsEditing(true)}>Edit</button>
                 </div>
             )}
         </div>
